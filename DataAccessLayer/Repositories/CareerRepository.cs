@@ -52,6 +52,40 @@ namespace DataAccessLayer.Repositories
                 command.ExecuteNonQuery();
             }
         }
+        public void EditCareer(Career career)
+        {
+            using (var connection = _dbConnection.GetConnection()) 
+            { string query  = @" UPDATE career 
+                            SET  nameCareer = @NameCareer 
+                                descriptionCareer = @DescriptionCareer 
+                                WGERE idCareer = @IdCareer";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@NameCareer", career.nameCareer);
+                command.Parameters.AddWithValue("@DescriptionCareer", career.descriptionCareer);
+                command.Parameters.AddWithValue("@IdCareer", career.idCareer);
+
+                connection.Open() ;
+                command.ExecuteNonQuery();
+
+            }
+        }
+
+        public void DeleteCareer(int id)
+        {
+            using ( var connection = _dbConnection.GetConnection())
+            {
+                string query = "DELETE FROM career WHERE  IdCareer = @IdCareer";
+                SqlCommand command = new SqlCommand (query, connection);
+                command.Parameters.AddWithValue("@IdCareer", id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+
+
+
+            }
+        }
 
     }
     
